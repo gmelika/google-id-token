@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/gmelika/google-id-token.png)](https://travis-ci.org/gmelika/google-id-token)
+
 google-id-token
 ===============
 
