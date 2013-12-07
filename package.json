@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": 
+  "repository": {
     "type": "git",
     "url": "git://github.com/gmelika/google-id-token.git"
   },
@@ -17,5 +17,13 @@
     "access_token"
   ],
   "author": "George Melika",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*",
+    "request": "*"
+ },
+ "scripts": {
+    "test": "mocha test/*.js"
+ }
 }
