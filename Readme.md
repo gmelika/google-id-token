@@ -24,7 +24,9 @@ function getGoogleCerts(kid, callback) {
         
     });
 }
+```
 
+And below is how you would use the module to parse a google id_token
 ```javascript
 var googleIdToken = require('google-id-token')
 var parser = new googleIdToken({ getKeys: util.getGoogleCerts });
