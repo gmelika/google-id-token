@@ -32,24 +32,29 @@ var gidToken = module.exports = function(options) {
 			data: undefined,
 			isAuthentic: undefined // undefined = we didn't check
 		};
-		// check seguments
-		var segments = id_token.split('.');
-		if (segments.length !== 3) {
-			callback("jwt payload is supposed to be composed of 3 base64url encoded parts separated by a '.'",
-				result);
+		try {
+			// check segments
+			var segments = id_token.split('.');
+			if (segments.length !== 3) {
+				var error = new Error("jwt payload is supposed to be composed of 3 base64url encoded parts separated by a '.'");
+				callback(error, result);
+				return;
+			}
+
+			result.header = JSON.parse(Base64.urlDecode(segments[0]));
+			result.data = JSON.parse(Base64.urlDecode(segments[1]));
+			var signature = Base64.unescape(segments[2]);
+
+			// verify signature.
+			var dataToSign = [segments[0], segments[1]].join('.');
+			this.verify(dataToSign, result.header.kid, signature, function(err, isVerified) {
+				result.isAuthentic = isVerified;
+				result.isExpired = new Date() < result.data.exp;
+				callback(null, result);
+			});
+		} catch (exception) {
+			callback(exception, result);
 		}
-
-		result.header = JSON.parse(Base64.urlDecode(segments[0]));
-		result.data = JSON.parse(Base64.urlDecode(segments[1]));
-		var signature = Base64.unescape(segments[2]);
-
-		// verify signature.
-		var dataToSign = [segments[0], segments[1]].join('.');
-		this.verify(dataToSign, result.header.kid, signature, function(err, isVerified) {
-			result.isAuthentic = isVerified;
-			result.isExpired = new Date() < result.data.exp;
-			callback(null, result);
-		});
 	};
 	this.verify = function(payload, kid, providedSignature, callback) {
 		var verifier = crypto.createVerify("RSA-SHA256");
