@@ -11,7 +11,7 @@ var Base64 = {
 	},
 	urlDecode: function(str) {
 		str = this.unescape(str);
-		return new Buffer(str, 'base64').toString('ascii');
+		return new Buffer(str, 'base64').toString('utf8');
 	},
 	unescape: function(str) {
 		str += Array(5 - str.length % 4).join('=');
