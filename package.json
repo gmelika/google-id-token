@@ -1,6 +1,6 @@
 {
   "name": "google-id-token",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Validates and decrypts google's id_token",
   "main": "index.js",
   "scripts": {
