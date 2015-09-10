@@ -49,7 +49,7 @@ var gidToken = module.exports = function(options) {
 			var dataToSign = [segments[0], segments[1]].join('.');
 			this.verify(dataToSign, result.header.kid, signature, function(err, isVerified) {
 				result.isAuthentic = isVerified;
-				result.isExpired = new Date() < result.data.exp;
+				result.isExpired = (new Date().getTime()) < result.data.exp;
 				callback(null, result);
 			});
 		} catch (exception) {
